@@ -13,10 +13,10 @@ class ChatScreen extends StatelessWidget {
         leading: const Padding(
           padding: EdgeInsets.all(4.0),
           child: CircleAvatar(
-            backgroundImage: NetworkImage("https://amexi.com.mx/wp-content/uploads/2024/08/Karely-Ruiz.jpg"),
+            backgroundImage: NetworkImage("https://media.vogue.mx/photos/5f4fff4294d967b5b6cd1a56/2:3/w_1920,c_limit/ester-exposito-en-el-festival-de-cine-de-venecia-2020.jpg"),
           ),
         ),
-        title: const Text("Mi amor kaBB  😍"),
+        title: const Text("Mi amor 😍"),
         centerTitle: true,
       ),
       body: _ChatView(),
@@ -35,7 +35,7 @@ class _ChatView extends StatelessWidget {
           children: [
             Expanded(
               child: ListView.builder(
-                itemCount: 100,
+                itemCount: 5,
                 itemBuilder: (context, index) {
                   
                 return ( index % 2 == 0)
