@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:yes_no_app_daniel_4sa/domain/entities/message.dart';
 
-class GetYesNoAnswert {
+class GetYesNoAnswer {
   //Se crea instancia de la clase dio
   //Para manejar las peticiones de HTTP
   final _dio = Dio();
