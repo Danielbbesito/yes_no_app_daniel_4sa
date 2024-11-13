@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:yes_no_app_daniel_4sa/config/helpers/get_yes_no_answer.dart';
 import 'package:yes_no_app_daniel_4sa/domain/entities/message.dart';
 
+
+
 class ChatProvider extends ChangeNotifier {
   List<Message> messageList = [
     Message(text: "Hola ader", fromWho: FromWho.me),
@@ -14,10 +16,16 @@ class ChatProvider extends ChangeNotifier {
   //Instancia de la clase GetYesNoAnswer
   final getYesNoAnswer = GetYesNoAnswer();
 
+  //Variable  para la ultima hora de mensaje 
+  DateTime lastMessageTime = DateTime.now();
+
   //Enviar un mensaje
   Future<void> sendMessage(String text) async {
       // Verifica que el texto no esté vacío
   if (text.isEmpty) return; // No envía el mensaje si está vacío
+
+  //Avanza unos mimutos en la ultima hora del mensaje
+  lastMessageTime = lastMessageTime.add(const Duration(minutes:1));
   
     //El mensaje siempre va a ser "me" porque yo lo envío
     final newMessage = Message(text: text, fromWho: FromWho.me);
@@ -53,6 +61,7 @@ class ChatProvider extends ChangeNotifier {
   }
   
   Future<void> herReply() async {
+    await Future.delayed(const Duration(seconds: 2));
     //Obetener el mensaje de la peticion 
     final herMessage = await getYesNoAnswer.getAnswer();
     //Añadir el mensaje de mi crush a la lista

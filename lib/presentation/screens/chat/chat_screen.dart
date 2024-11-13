@@ -14,13 +14,29 @@ class ChatScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: const Padding(
-          padding: EdgeInsets.all(4.0),
+          padding: EdgeInsets.all(2.0),
           child: CircleAvatar(
-            backgroundImage: NetworkImage("https://media.vogue.mx/photos/5f4fff4294d967b5b6cd1a56/2:3/w_1920,c_limit/ester-exposito-en-el-festival-de-cine-de-venecia-2020.jpg"),
+            backgroundImage: NetworkImage(
+                "https://media.vogue.mx/photos/5f4fff4294d967b5b6cd1a56/2:3/w_1920,c_limit/ester-exposito-en-el-festival-de-cine-de-venecia-2020.jpg"),
           ),
         ),
-        title: const Text("Mi amor 😍"),
-        centerTitle: true,
+        title: const Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Ester Exposito😍", // Nombre de la persona
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(
+              "En línea", // Estado "En línea"
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.grey,
+              ),
+            ),
+          ],
+        ),
+        centerTitle: false,
       ),
       body: _ChatView(),
     );
@@ -28,37 +44,38 @@ class ChatScreen extends StatelessWidget {
 }
 
 class _ChatView extends StatelessWidget {
-  
-
   @override
   Widget build(BuildContext context) {
-
-
     final chatProvider = context.watch<ChatProvider>();
+
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Column( 
+        child: Column(
           children: [
             Expanded(
               child: ListView.builder(
+                controller: chatProvider.chatScrollController,
                 itemCount: chatProvider.messageList.length,
                 itemBuilder: (context, index) {
-                  //Instancia del message que sabra de quien es el mensaje
                   final message = chatProvider.messageList[index];
-                return ( message.fromWho == FromWho.hers)
-                  ?  HerMessageBubble(message: message,)
-                  :  MyMessageBubble(message:message,);
 
-              })
+                  return (message.fromWho == FromWho.hers)
+                      ? HerMessageBubble(message: message)
+                      : MyMessageBubble(
+                          message: message,
+                        );
+                },
+              ),
             ),
-            //Caja de texto
+
+            // Caja de texto
             MessageFieldBox(
-              //Una vez que tenga el valor cambiado, envialo
-              onValue: chatProvider.sendMessage,),
+              onValue: (value) => chatProvider.sendMessage(value),
+            ),
           ],
         ),
       ),
     );
   }
-} 
+}
